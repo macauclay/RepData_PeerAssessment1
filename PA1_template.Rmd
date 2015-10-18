@@ -8,14 +8,22 @@ output:
 
 ## Loading and preprocessing the data
 
+unzip("activity.zip")
+activity <- read.csv("activity.csv")
 
 
 ## What is mean total number of steps taken per day?
 
+#1. Make a histogram
+StepsTotal <- aggregate(steps ~ date, data = activity, sum, na.rm = TRUE)
+barplot(StepsTotal$steps, names.arg = steps.date$date, xlab = "date", ylab = "steps")
 
+mean(StepsTotal$steps)
+median(StepsTotal$steps)
 
 ## What is the average daily activity pattern?
 
+time_series <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
 
 
 ## Imputing missing values
