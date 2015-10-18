@@ -15,13 +15,13 @@ activity <- read.csv("activity.csv")
 
 ## What is mean total number of steps taken per day?
 
-####1.Make a histogram 
+#####1.Make a histogram 
 
 StepsTotal <- aggregate(steps ~ date, data = activity, FUN = sum)
 
 hist(StepsTotal$steps, main = "Total steps by day", xlab = "day", col = "red")
 
-####2.The mean and median is
+#####2.The mean and median is
 
 mean(StepsTotal$steps)
 
@@ -29,7 +29,7 @@ median(StepsTotal$steps)
 
 ## What is the average daily activity pattern?
 
-####1. Make a time series plot 
+#####1. Make a time series plot 
 
 time_series <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
 
@@ -39,7 +39,7 @@ plot(row.names(time_series), time_series, type = "l", xlab = "5-min interval",
     
     col = "red")
     
-####2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+#####2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 time_series$interval[which.max(steps.interval$steps)]
 
@@ -48,7 +48,7 @@ time_series$interval[which.max(steps.interval$steps)]
 #####1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
 sum(is.na(activity))
-####2. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+#####2. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 StepsAverage <- aggregate(steps ~ interval, data = activity, FUN = mean)
 
@@ -72,7 +72,7 @@ for (i in 1:nrow(activity)) {
     
 }
 
-####3.Make a histogram
+#####3.Make a histogram
 new_activity <- activity
 
 new_activity$steps <- fillNA
@@ -81,7 +81,7 @@ StepsTotal2 <- aggregate(steps ~ date, data = new_activity, sum, na.rm = TRUE)
 
 hist(StepsTotal2$steps, main = "Total steps by day", xlab = "day", col = "red")
 
-####4. Mean and median
+#####4. Mean and median
 
 mean(StepsTotal2$steps)
 
@@ -89,3 +89,30 @@ median(StepsTotal2$steps)
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+#####1.  Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+daytype <- function(date) {
+    if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
+        "weekend"
+    } else {
+        "weekday"
+    }
+}
+activity$daytype <- as.factor(sapply(activity$date, daytype))
+
+#####2. Make a panel plot containing a time series plot
+par(mfrow = c(2, 1))
+for (type in c("weekend", "weekday")) {
+    steps.type <- aggregate(steps ~ interval, data = activity, subset = activity$daytype == 
+        type, FUN = mean)
+    plot(steps.type, type = "l", main = type)
+}
+
+
+
+
+
+
+
+
+
