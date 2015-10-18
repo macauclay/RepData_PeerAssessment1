@@ -9,18 +9,19 @@ output:
 ## Loading and preprocessing the data
 
 unzip("activity.zip")
+
 activity <- read.csv("activity.csv")
 
 
 ## What is mean total number of steps taken per day?
 
-1.Make a histogram 
+#1.Make a histogram 
 
 StepsTotal <- aggregate(steps ~ date, data = activity, FUN = sum)
 
 hist(StepsTotal$steps, main = "Total steps by day", xlab = "day", col = "red")
 
-2.The mean and median is
+#2.The mean and median is
 
 mean(StepsTotal$steps)
 
