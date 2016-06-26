@@ -1,3 +1,5 @@
+
+
 # Reproducible Research: Peer Assessment 1
 
 ## Loading and preprocessing the data
@@ -156,3 +158,9 @@ ggplot(averages, aes(interval, steps)) + geom_line() + facet_grid(day ~ .) +
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/weekend_comparison.jpeg) 
+
+```r
+https://github.com/macauclay/RepData_PeerAssessment1
+
+7c376cc5447f11537f8740af8e07d6facc3d9645
+```
